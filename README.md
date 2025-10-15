@@ -151,8 +151,7 @@ To contribute:
 
 ## 🪪 License
 
-This project currently does **not include a license**.  
-If you plan to make it public, consider adding an open-source license such as [MIT](https://opensource.org/licenses/MIT).
+This project is licensed under the [MIT License](LICENSE).
 
 ---
 
