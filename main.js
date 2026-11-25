@@ -8,6 +8,8 @@ const {
   powerMonitor,
 } = require("electron");
 const path = require("path");
+const i18n = require("./i18n");
+const { t } = i18n;
 const fs = require("fs");
 const os = require("os");
 
@@ -16,9 +18,9 @@ const LOGIN_ITEM_NAME = "WaterReminder"; // Windows Run key name (also removed b
 const HIDDEN_ARG = "--hidden";
 const INTERVAL_PRESETS = [15, 30, 45, 60, 90, 120];
 const PAUSE_PRESETS = [
-  { label: "30 minutes", minutes: 30 },
-  { label: "1 hour", minutes: 60 },
-  { label: "2 hours", minutes: 120 },
+  { labelKey: "pause.30", minutes: 30 },
+  { labelKey: "pause.60", minutes: 60 },
+  { labelKey: "pause.120", minutes: 120 },
 ];
 const MIN_INTERVAL = 1;
 const MAX_INTERVAL = 480;
@@ -135,7 +137,7 @@ function applyAutoStart(enabled) {
           "[Desktop Entry]",
           "Type=Application",
           "Name=Water Reminder",
-          "Comment=Reminds you to drink water",
+          `Comment=${t("linux.comment")}`,
           `Exec="${exec}" ${HIDDEN_ARG}`,
           "Terminal=false",
           "X-GNOME-Autostart-enabled=true",
@@ -242,10 +244,10 @@ function formatTime(ts) {
 }
 
 function statusText() {
-  if (settings.pausedUntil === "indefinite") return "Paused";
-  if (isPaused()) return `Paused until ${formatTime(settings.pausedUntil)}`;
-  if (nextAlertAt) return `Next reminder at ${formatTime(nextAlertAt)}`;
-  return "Active";
+  if (settings.pausedUntil === "indefinite") return t("status.paused");
+  if (isPaused()) return t("status.pausedUntil", { time: formatTime(settings.pausedUntil) });
+  if (nextAlertAt) return t("status.next", { time: formatTime(nextAlertAt) });
+  return t("status.active");
 }
 
 function getState() {
@@ -256,11 +258,15 @@ function getState() {
     nextAlertAt,
     autoStartSupported: autoStartSupported(),
     intervalPresets: INTERVAL_PRESETS,
-    pausePresets: PAUSE_PRESETS,
+    pausePresets: pausePresets(),
     minInterval: MIN_INTERVAL,
     maxInterval: MAX_INTERVAL,
     intervalStepMinutes: INTERVAL_STEP_MINUTES,
   };
+}
+
+function pausePresets() {
+  return PAUSE_PRESETS.map((p) => ({ label: t(p.labelKey), minutes: p.minutes }));
 }
 
 function refreshUI() {
@@ -296,7 +302,7 @@ function createPopup() {
   });
 
   popupWindow.loadFile(path.join(__dirname, "renderer", "index.html"), {
-    query: { sound: settings.soundEnabled ? "1" : "0" },
+    query: { sound: settings.soundEnabled ? "1" : "0", message: t("popup.message") },
   });
   // The popup has no preload; surface its console (e.g. audio playback errors) in the app log.
   popupWindow.webContents.on("console-message", (event, _level, message) => {
@@ -383,24 +389,27 @@ function buildTrayMenu() {
     : [...INTERVAL_PRESETS, settings.intervalMinutes].sort((a, b) => a - b);
 
   const pauseItem = paused
-    ? { label: "Resume alerts", click: resumeAlerts }
+    ? { label: t("tray.resume"), click: resumeAlerts }
     : {
-        label: "Pause alerts",
+        label: t("tray.pause"),
         submenu: [
-          ...PAUSE_PRESETS.map((p) => ({ label: `For ${p.label}`, click: () => pauseAlerts(p.minutes) })),
+          ...pausePresets().map((p) => ({
+            label: t("tray.pauseFor", { duration: p.label }),
+            click: () => pauseAlerts(p.minutes),
+          })),
           { type: "separator" },
-          { label: "Until I resume", click: () => pauseAlerts(null) },
+          { label: t("pause.untilResume"), click: () => pauseAlerts(null) },
         ],
       };
 
   return Menu.buildFromTemplate([
     { label: statusText(), enabled: false },
     { type: "separator" },
-    { label: "Show reminder now", click: remindNow },
+    { label: t("tray.remindNow"), click: remindNow },
     {
-      label: "Interval",
+      label: t("tray.interval"),
       submenu: intervals.map((m) => ({
-        label: `Every ${m} min`,
+        label: t("tray.every", { minutes: m }),
         type: "radio",
         checked: m === settings.intervalMinutes,
         click: () => updateSettings({ intervalMinutes: m }),
@@ -408,15 +417,15 @@ function buildTrayMenu() {
     },
     pauseItem,
     {
-      label: "Start with system",
+      label: t("startWithSystem"),
       type: "checkbox",
       checked: settings.autoStart,
       enabled: autoStartSupported(),
       click: (item) => updateSettings({ autoStart: item.checked }),
     },
     { type: "separator" },
-    { label: "Settings…", click: showSettings },
-    { label: "Quit", click: () => app.quit() },
+    { label: t("tray.settings"), click: showSettings },
+    { label: t("tray.quit"), click: () => app.quit() },
   ]);
 }
 
@@ -461,6 +470,7 @@ function updateSettings(patch) {
 
 function registerIpc() {
   ipcMain.handle("state:get", () => getState());
+  ipcMain.handle("i18n:get", () => i18n.getStrings());
   ipcMain.handle("settings:set", (_e, patch) => updateSettings(patch || {}));
   ipcMain.handle("alerts:pause", (_e, minutes) => {
     pauseAlerts(minutes ? Number(minutes) : null);
@@ -488,6 +498,18 @@ function registerIpc() {
 // App lifecycle
 // ---------------------------------------------------------------------------
 
+function detectLanguage() {
+  // getPreferredSystemLanguages() follows the OS display language list (may be empty on some
+  // Linux setups); getLocale() is Chromium's UI locale and needs the app to be ready.
+  let locales = [];
+  try {
+    locales = [...app.getPreferredSystemLanguages(), app.getLocale()].filter(Boolean);
+  } catch (err) {
+    log(`could not read system languages: ${err.message}`);
+  }
+  log(`language: ${i18n.setLanguageFromLocales(locales)} (${locales.join(", ") || "unknown"})`);
+}
+
 if (isLinux) app.commandLine.appendSwitch("enable-transparent-visuals");
 if (isWin) app.setAppUserModelId(APP_ID);
 
@@ -499,6 +521,8 @@ if (!app.requestSingleInstanceLock()) {
   app.whenReady().then(() => {
     log("app started");
     if (isMac && app.dock) app.dock.hide();
+
+    detectLanguage();
 
     loadSettings();
     syncAutoStart();

@@ -21,4 +21,13 @@ function playSound() {
   }, OUTPUT_WAKE_MS);
 }
 
-if (new URLSearchParams(window.location.search).get("sound") === "1") playSound();
+const params = new URLSearchParams(window.location.search);
+
+// The main process passes the message already translated (the popup has no preload).
+const message = params.get("message");
+if (message) {
+  document.getElementById("message").textContent = message;
+  document.getElementById("reminder-gif").alt = message;
+}
+
+if (params.get("sound") === "1") playSound();

@@ -74,7 +74,8 @@ Blue: renderer pages · yellow: preload bridge · green: main process · grey: o
 | Scheduler         | `main.js`                                | One timer for the next reminder, or one timer for the end of a pause |
 | Windows           | `main.js`                                | Create the popup and the single settings window                    |
 | Tray              | `main.js`                                | Context menu, tooltip with the current status                      |
-| Bridge            | `preload.js`                             | Exposes `getState`, `setSettings`, `pause`, `resume`, `testAlert`, `onStateChanged` |
+| Translations      | `i18n.js`                                | English and Portuguese strings; language picked from the OS display language |
+| Bridge            | `preload.js`                             | Exposes `getState`, `getStrings`, `setSettings`, `pause`, `resume`, `testAlert`, window controls, `onStateChanged` |
 | Popup UI          | `renderer/index.html`, `popup.js`, `style.css` | Animation, message, optional sound                         |
 | Settings UI       | `renderer/settings.*`                    | Interval, presets, pause/resume, toggles                           |
 
@@ -96,7 +97,8 @@ flowchart TD
   B -- "Yes" --> C["Platform setup<br/>Linux: transparent visuals<br/>Windows: AppUserModelId"]
   C --> D["app ready"]
   D --> E["macOS: hide Dock icon"]
-  E --> F["loadSettings()"]
+  E --> E2["detectLanguage()<br/>Portuguese display → pt, else en"]
+  E2 --> F["loadSettings()"]
   F --> G["syncAutoStart()"]
   G --> H["saveSettings()"]
   H --> I["registerIpc()"]
@@ -111,6 +113,12 @@ flowchart TD
 When the OS launches the app at login, it passes `--hidden` (or, on macOS, the app checks
 `wasOpenedAtLogin`), so it goes straight to the tray. Launching it yourself opens the settings
 window.
+
+`detectLanguage()` reads the OS display languages (`app.getPreferredSystemLanguages()`, with
+`app.getLocale()` as fallback). If the first one is Portuguese (`pt-BR`, `pt-PT`, …) every
+string in the tray, settings window and popup comes from the Portuguese table in `i18n.js`;
+anything else uses English. The language is fixed for the run, so changing the OS language
+takes effect the next time the app starts.
 
 ---
 
@@ -292,6 +300,7 @@ tray:
 | `window.api` function | IPC channel      | Effect                                    |
 | --------------------- | ---------------- | ----------------------------------------- |
 | `getState()`          | `state:get`      | Returns the current state                 |
+| `getStrings()`        | `i18n:get`       | Returns `{ language, strings }` for the UI |
 | `setSettings(patch)`  | `settings:set`   | `updateSettings(patch)`                   |
 | `pause(minutes)`      | `alerts:pause`   | Timed pause, or indefinite when `null`    |
 | `resume()`            | `alerts:resume`  | Resume alerts                             |

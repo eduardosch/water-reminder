@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div id="app" class="app">
+    <div id="app" class="app" data-loading>
         <header class="titlebar">
             <div class="titlebar-title">
                 <svg class="drop" width="14" height="16" viewBox="0 0 14 16" aria-hidden="true">
@@ -18,12 +18,12 @@
                 <span>Water Reminder</span>
             </div>
             <div class="titlebar-controls">
-                <button id="minimize" class="window-btn" title="Minimize" aria-label="Minimize">
+                <button id="minimize" class="window-btn" data-i18n-label="window.minimize">
                     <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
                         <path d="M2 6h8" />
                     </svg>
                 </button>
-                <button id="close" class="window-btn" title="Close to tray" aria-label="Close to tray">
+                <button id="close" class="window-btn" data-i18n-label="window.close">
                     <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
                         <path d="M3 3l6 6M9 3l-6 6" />
                     </svg>
@@ -39,7 +39,7 @@
                         <circle id="ring-progress" class="ring-progress" cx="100" cy="100" r="88" />
                     </svg>
                     <div class="ring-text" role="status">
-                        <span id="ring-label" class="ring-label">Next sip in</span>
+                        <span id="ring-label" class="ring-label"></span>
                         <span id="ring-value" class="ring-value">–</span>
                         <span id="ring-sub" class="ring-sub"></span>
                     </div>
@@ -50,28 +50,28 @@
                         <svg width="14" height="16" viewBox="0 0 14 16" aria-hidden="true">
                             <path d="M7 0.8C7 0.8 1 7.4 1 10.6a6 6 0 0 0 12 0C13 7.4 7 0.8 7 0.8Z" />
                         </svg>
-                        Remind me now
+                        <span data-i18n="action.remindNow">Remind me now</span>
                     </button>
                     <button id="pause" class="btn btn-soft" aria-expanded="false" aria-controls="pause-menu">
                         <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
                             <rect x="2" y="1.5" width="2.6" height="9" rx="1" />
                             <rect x="7.4" y="1.5" width="2.6" height="9" rx="1" />
                         </svg>
-                        Pause
+                        <span data-i18n="action.pause">Pause</span>
                     </button>
                 </div>
                 <button id="resume" class="btn btn-primary btn-wide" hidden>
                     <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
                         <path d="M3 1.8v8.4L10 6z" />
                     </svg>
-                    Resume reminders
+                    <span data-i18n="action.resume">Resume reminders</span>
                 </button>
                 <div id="pause-menu" class="pause-menu" hidden></div>
             </section>
 
             <section class="card interval-card">
                 <div class="interval-row">
-                    <span class="card-title">Remind me every</span>
+                    <span class="card-title" data-i18n="interval.title">Remind me every</span>
                     <div class="stepper">
                         <button id="dec" class="stepper-btn">−</button>
                         <span id="interval" class="stepper-value"></span>
@@ -84,21 +84,21 @@
             <section class="card toggles-card">
                 <button id="autostart" class="toggle-row" role="switch" aria-checked="false">
                     <span class="toggle-text">
-                        <span class="toggle-label">Start with system</span>
-                        <span id="autostart-hint" class="toggle-hint">Launch quietly when you sign in</span>
+                        <span class="toggle-label" data-i18n="startWithSystem">Start with system</span>
+                        <span id="autostart-hint" class="toggle-hint"></span>
                     </span>
                     <span class="switch" aria-hidden="true"><span class="knob"></span></span>
                 </button>
                 <button id="sound" class="toggle-row" role="switch" aria-checked="false">
                     <span class="toggle-text">
-                        <span class="toggle-label">Play sound</span>
-                        <span class="toggle-hint">A soft chime with each reminder</span>
+                        <span class="toggle-label" data-i18n="toggle.sound">Play sound</span>
+                        <span class="toggle-hint" data-i18n="toggle.soundHint">A soft chime with each reminder</span>
                     </span>
                     <span class="switch" aria-hidden="true"><span class="knob"></span></span>
                 </button>
             </section>
 
-            <p class="footer">Closing this window keeps Water Reminder running in the tray.</p>
+            <p class="footer" data-i18n="footer">Closing this window keeps Water Reminder running in the tray.</p>
         </main>
     </div>
 

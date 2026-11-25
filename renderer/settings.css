@@ -95,6 +95,11 @@ svg rect {
   fill: currentColor;
 }
 
+/* Hidden until the translated strings are applied, so English text never flashes. */
+.app[data-loading] {
+  visibility: hidden;
+}
+
 /* Title bar ------------------------------------------------------------- */
 
 .titlebar {

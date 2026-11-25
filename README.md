@@ -57,6 +57,7 @@ xattr -cr "/Applications/Water Reminder.app"
 - 🚀 Starts with the system (optional), straight to the tray
 - 🧺 Lives in the system tray / menu bar — closing the window keeps it running
 - 🔔 Popup animation with optional sound
+- 🌐 In Portuguese when your system display language is Portuguese, English otherwise
 - 💻 Windows, Linux and macOS
 
 ---
@@ -159,6 +160,7 @@ To preview locally, open the Markdown file on GitHub, or run `bundle exec jekyll
 water-reminder/
 ├── main.js                  # Main process: tray, scheduler, pause, autostart, windows
 ├── preload.js               # Safe bridge between settings window and main process
+├── i18n.js                  # UI strings in English and Portuguese
 ├── package.json             # Metadata, scripts and electron-builder config
 ├── pnpm-workspace.yaml      # Allows Electron's install script to run
 ├── icon.png                 # App / tray icon

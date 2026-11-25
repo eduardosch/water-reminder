@@ -27,9 +27,29 @@ const els = {
   sound: $("sound"),
 };
 
+let strings = {};
+let language = "en";
 let state = null;
 let built = false;
 let pauseMenuOpen = false;
+
+function t(key, vars = {}) {
+  const template = strings[key] ?? key;
+  return template.replace(/\{(\w+)\}/g, (match, name) => (name in vars ? vars[name] : match));
+}
+
+function applyStrings(payload) {
+  strings = payload.strings;
+  language = payload.language;
+  document.documentElement.lang = language;
+  for (const el of document.querySelectorAll("[data-i18n]")) {
+    el.textContent = t(el.dataset.i18n);
+  }
+  for (const el of document.querySelectorAll("[data-i18n-label]")) {
+    el.title = t(el.dataset.i18nLabel);
+    el.setAttribute("aria-label", el.title);
+  }
+}
 
 function formatTime(ts) {
   return new Date(ts).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
@@ -37,7 +57,7 @@ function formatTime(ts) {
 
 function presetLabel(minutes) {
   if (minutes < MINUTES_PER_HOUR) return `${minutes}m`;
-  return `${minutes / MINUTES_PER_HOUR}h`;
+  return `${(minutes / MINUTES_PER_HOUR).toLocaleString(language)}h`;
 }
 
 function button(className, label, onClick) {
@@ -65,17 +85,17 @@ function buildStatic(s) {
       window.api.setSettings({ intervalMinutes: minutes });
     });
     btn.dataset.minutes = String(minutes);
-    btn.title = `${minutes} minutes`;
+    btn.title = t("interval.preset", { minutes });
     els.presets.appendChild(btn);
   }
 
   for (const p of s.pausePresets) {
     els.pauseMenu.appendChild(button("pause-option", p.label, () => pauseFor(p.minutes)));
   }
-  els.pauseMenu.appendChild(button("pause-option", "Until I resume", () => pauseFor(null)));
+  els.pauseMenu.appendChild(button("pause-option", t("pause.untilResume"), () => pauseFor(null)));
 
-  els.dec.title = `${s.intervalStepMinutes} minutes less`;
-  els.inc.title = `${s.intervalStepMinutes} minutes more`;
+  els.dec.title = t("interval.less", { minutes: s.intervalStepMinutes });
+  els.inc.title = t("interval.more", { minutes: s.intervalStepMinutes });
   els.dec.setAttribute("aria-label", els.dec.title);
   els.inc.setAttribute("aria-label", els.inc.title);
 
@@ -90,19 +110,19 @@ function renderRing() {
   let fraction = 0;
 
   if (state.paused) {
-    els.ringLabel.textContent = "Paused";
+    els.ringLabel.textContent = t("ring.paused");
     els.ringValue.textContent = pausedUntil === "indefinite" ? "—" : formatTime(pausedUntil);
     els.ringSub.textContent =
-      pausedUntil === "indefinite" ? "Until you resume" : "Resumes automatically";
+      pausedUntil === "indefinite" ? t("ring.untilResume") : t("ring.resumesAuto");
   } else if (state.nextAlertAt) {
     const remainingMs = Math.max(0, state.nextAlertAt - Date.now());
     const totalSeconds = Math.floor(remainingMs / 1000);
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = String(totalSeconds % 60).padStart(2, "0");
     fraction = Math.min(1, remainingMs / (settings.intervalMinutes * 60 * 1000));
-    els.ringLabel.textContent = "Next sip in";
+    els.ringLabel.textContent = t("ring.next");
     els.ringValue.textContent = `${minutes}:${seconds}`;
-    els.ringSub.textContent = `at ${formatTime(state.nextAlertAt)}`;
+    els.ringSub.textContent = t("ring.at", { time: formatTime(state.nextAlertAt) });
   }
 
   els.ring.classList.toggle("paused", state.paused);
@@ -124,7 +144,7 @@ function render(next) {
   els.resume.hidden = !state.paused;
   if (state.paused && pauseMenuOpen) setPauseMenu(false);
 
-  els.interval.textContent = `${settings.intervalMinutes} min`;
+  els.interval.textContent = t("interval.value", { minutes: settings.intervalMinutes });
   els.dec.disabled = settings.intervalMinutes <= state.minInterval;
   els.inc.disabled = settings.intervalMinutes >= state.maxInterval;
   for (const btn of els.presets.children) {
@@ -134,8 +154,8 @@ function render(next) {
   renderSwitch(els.autostart, settings.autoStart);
   els.autostart.disabled = !state.autoStartSupported;
   els.autostartHint.textContent = state.autoStartSupported
-    ? "Launch quietly when you sign in"
-    : "Available in the installed app";
+    ? t("toggle.startHint")
+    : t("toggle.startUnavailable");
   renderSwitch(els.sound, settings.soundEnabled);
 }
 
@@ -164,6 +184,13 @@ els.sound.addEventListener("click", () => {
 // The window has no OS frame, so size it to the content (e.g. when the pause menu opens).
 new ResizeObserver(() => window.api.fitWindow(els.app.offsetHeight)).observe(els.app);
 
-window.api.onStateChanged(render);
-window.api.getState().then(render);
-setInterval(renderRing, TICK_MS);
+// Strings first, so the first render (and the pause menu built from it) is already translated.
+window.api.getStrings().then((payload) => {
+  applyStrings(payload);
+  window.api.onStateChanged(render);
+  return window.api.getState().then((s) => {
+    render(s);
+    delete els.app.dataset.loading;
+    setInterval(renderRing, TICK_MS);
+  });
+});

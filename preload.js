@@ -2,6 +2,7 @@ const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("api", {
   getState: () => ipcRenderer.invoke("state:get"),
+  getStrings: () => ipcRenderer.invoke("i18n:get"),
   setSettings: (patch) => ipcRenderer.invoke("settings:set", patch),
   pause: (minutes) => ipcRenderer.invoke("alerts:pause", minutes),
   resume: () => ipcRenderer.invoke("alerts:resume"),

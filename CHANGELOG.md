@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-11-25
+
+### Added
+
+- Portuguese translation: the tray menu, settings window and reminder popup are shown in
+  Portuguese when the system display language is Portuguese, and in English otherwise
+
 ## [1.1.3] - 2026-11-25
 
 ### Fixed

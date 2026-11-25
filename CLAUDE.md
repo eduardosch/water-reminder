@@ -95,7 +95,10 @@ no TypeScript.
   `@media (prefers-color-scheme: dark)` block for any new color. No hardcoded colors elsewhere.
 - Fonts are bundled under `renderer/assets/fonts` (CSP blocks remote fonts): `Bungee-Regular` for the
   popup message, `Figtree` for settings-window text, `Bricolage Grotesque` for the countdown number.
-- UI text is English, short, sentence case; use `…` (ellipsis character) for menu items that open windows.
+- UI text is short, sentence case; use `…` (ellipsis character) for menu items that open windows.
+  Never hardcode user-visible text: add the key to **both** `en` and `pt` in `i18n.js` and use
+  `t(key, vars)` (main) or `data-i18n` / `t()` (settings window, strings via `getStrings()`).
+  The popup gets its translated message through the `message` query parameter.
 - Popup windows must not steal focus (`focusable: false`, `showInactive()`).
 
 ## Commits & releases
