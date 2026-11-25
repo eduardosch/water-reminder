@@ -15,7 +15,24 @@ permissions:
   contents: write
 
 jobs:
+  # Creates the draft release once, up front: when the three build jobs each try to
+  # create it in parallel, GitHub returns 500s and some installers never get uploaded.
+  release:
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create draft release
+        run: |
+          gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1 ||
+            gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --draft \
+              --title "${GITHUB_REF_NAME#v}" --generate-notes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   build:
+    needs: release
+    # Still runs on manual dispatch, where the release job is skipped.
+    if: ${{ !failure() && !cancelled() }}
     strategy:
       fail-fast: false
       matrix:

@@ -107,4 +107,4 @@ no TypeScript.
   4. Watch the run (`gh run watch`) and confirm the release has the `.exe`, `.deb`, `.AppImage`
      and `.dmg` assets (`gh release view vX.Y.Z`).
   Changes that only touch docs, CI, `CLAUDE.md` or dev tooling don't need a release.
-  Never re-use or move an existing tag — always bump the version.
+  Never move the tag of a published release — bump the version instead.
