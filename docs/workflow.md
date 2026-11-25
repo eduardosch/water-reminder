@@ -31,42 +31,41 @@ plain HTML pages (**renderers**) that cannot use Node.js. They talk to the main 
 through a narrow bridge, `window.api`, defined in `preload.js`.
 
 ```mermaid
-flowchart LR
-  subgraph OS["Operating system"]
-    TRAY["System tray / menu bar"]
-    LOGIN["Login items<br/>Run key · Login Items · ~/.config/autostart"]
-    POWER["Power events<br/>sleep / wake"]
-    FILE[("settings.json<br/>in userData")]
-  end
+flowchart TB
+  SETTINGS["Settings window<br/>renderer/settings.*"]:::rend
+  POPUP["Reminder popup<br/>renderer/index.html"]:::rend
+  PRELOAD["preload.js<br/>window.api bridge"]:::bridge
+  IPC["IPC handlers"]:::main
+  TRAYC["Tray menu"]:::main
+  STORE["Settings store"]:::main
+  SCHED["Scheduler & pause"]:::main
+  AUTO["Start with system"]:::main
+  WIN["Window manager"]:::main
+  FILE[("settings.json")]:::os
+  LOGIN["OS login items"]:::os
+  POWER["OS sleep / wake"]:::os
+  TRAY["System tray / menu bar"]:::os
 
-  subgraph MAIN["Main process · main.js"]
-    STORE["Settings store"]
-    SCHED["Scheduler & pause"]
-    AUTO["Start with system"]
-    WIN["Window manager"]
-    TRAYC["Tray menu"]
-    IPC["IPC handlers"]
-  end
-
-  subgraph REND["Renderers · renderer/"]
-    POPUP["Reminder popup<br/>index.html + popup.js"]
-    SETTINGS["Settings window<br/>settings.html + settings.js"]
-  end
-
-  PRELOAD["preload.js<br/>window.api"]
-
+  SETTINGS <-->|"invoke / state:changed"| PRELOAD
+  PRELOAD <--> IPC
+  TRAY <--> TRAYC
+  IPC --> STORE
+  TRAYC --> STORE
+  STORE --> AUTO
+  STORE --> SCHED
   STORE <--> FILE
   AUTO <--> LOGIN
   POWER --> SCHED
-  TRAYC <--> TRAY
-  SCHED --> WIN
-  WIN --> POPUP
-  WIN --> SETTINGS
-  SETTINGS <--> PRELOAD
-  PRELOAD <--> IPC
-  IPC --> STORE
-  IPC --> SCHED
+  SCHED -->|"timer fires"| WIN
+  WIN -->|"shows"| POPUP
+
+  classDef rend fill:#e6f1ff,stroke:#0077ff,color:#1d2b3a
+  classDef bridge fill:#fff4d6,stroke:#d97706,color:#1d2b3a
+  classDef main fill:#e8f7ee,stroke:#16a34a,color:#1d2b3a
+  classDef os fill:#f1f1f4,stroke:#6b7a8c,color:#1d2b3a
 ```
+
+Blue: renderer pages · yellow: preload bridge · green: main process · grey: operating system.
 
 | Part              | File(s)                                  | Responsibility                                                     |
 | ----------------- | ---------------------------------------- | ------------------------------------------------------------------ |
