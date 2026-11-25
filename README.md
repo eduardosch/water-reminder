@@ -58,6 +58,7 @@ xattr -cr "/Applications/Water Reminder.app"
 - 🧺 Lives in the system tray / menu bar — closing the window keeps it running
 - 🔔 Popup animation with optional sound
 - 🌐 In Portuguese when your system display language is Portuguese, English otherwise
+- 🌙 Light and dark settings window that follows your system theme
 - 💻 Windows, Linux and macOS
 
 ---

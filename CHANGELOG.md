@@ -7,8 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-11-25
+
 ### Changed
 
+- New dark theme for the settings window (used when the system is in dark mode): navy window,
+  lighter cards, a brighter countdown ring and a deeper blue "Remind me now" button with white
+  text
 - Redesigned project website: live, clickable demo of the settings window in the hero (with the
   reminder popup), features, a three-step how-it-works and per-platform download buttons that
   link straight to the latest installers; light and dark themes that follow the system setting,

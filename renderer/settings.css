@@ -14,6 +14,7 @@
 
 :root {
   --blue: #1a7fd6;
+  --primary: #1a7fd6;
   --blue-hover: #1570c0;
   --blue-soft: #e8f1fa;
   --blue-soft-hover: #dcebf7;
@@ -28,7 +29,11 @@
   --hover: #e6edf3;
   --track: #eaf1f7;
   --switch-off: #d3dce4;
+  --switch-on: #1a7fd6;
   --paused: #d3dce4;
+  --segment-active: #ffffff;
+  --segment-active-border: #e3eaf0;
+  --segment-active-text: #1a7fd6;
   --knob-shadow: rgba(15, 34, 51, 0.25);
   --chip-shadow: rgba(15, 34, 51, 0.12);
   --knob: #ffffff;
@@ -36,25 +41,30 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --blue: #4d9fff;
-    --blue-hover: #6aafff;
-    --blue-soft: #1b2d44;
-    --blue-soft-hover: #223852;
-    --blue-soft-text: #a9cfff;
-    --on-blue: #0b1520;
-    --bg: #0f1723;
-    --card: #172131;
-    --text: #e4ecf6;
-    --muted: #93a4b8;
-    --border: #26354a;
-    --divider: #223045;
-    --hover: #22324a;
-    --track: #22324a;
-    --switch-off: #3a4a60;
-    --paused: #3a4a60;
-    --knob-shadow: rgba(0, 0, 0, 0.5);
-    --chip-shadow: rgba(0, 0, 0, 0.4);
-    --knob: #e4ecf6;
+    --blue: #3b9bf0;
+    --primary: #1670c0; /* deeper than --blue so white button text stays readable */
+    --blue-hover: #1462ab;
+    --blue-soft: #17324b;
+    --blue-soft-hover: #1c3d5b;
+    --blue-soft-text: #cfe6fa;
+    --on-blue: #ffffff;
+    --bg: #0f1a24;
+    --card: #17242f;
+    --text: #e6eef5;
+    --muted: #8da1b3;
+    --border: #223241;
+    --divider: #1e2d3a;
+    --hover: #1a2836;
+    --track: #1e2d3a;
+    --switch-off: #2a3a49;
+    --switch-on: #1a7fd6;
+    --paused: #2a3a49;
+    --segment-active: #243546;
+    --segment-active-border: #2e4152;
+    --segment-active-text: #7cc0f7;
+    --knob-shadow: rgba(0, 0, 0, 0.45);
+    --chip-shadow: rgba(0, 0, 0, 0.35);
+    --knob: #ffffff;
   }
 }
 
@@ -277,7 +287,7 @@ svg rect {
 }
 
 .btn-primary {
-  background: var(--blue);
+  background: var(--primary);
   color: var(--on-blue);
 }
 
@@ -389,9 +399,9 @@ svg rect {
 }
 
 .segment.active {
-  background: var(--card);
-  color: var(--blue);
-  box-shadow: 0 1px 2px var(--chip-shadow), 0 0 0 1px var(--border);
+  background: var(--segment-active);
+  color: var(--segment-active-text);
+  box-shadow: 0 1px 2px var(--chip-shadow), 0 0 0 1px var(--segment-active-border);
 }
 
 /* Toggles --------------------------------------------------------------- */
@@ -458,7 +468,7 @@ svg rect {
 }
 
 .toggle-row[aria-checked="true"] .switch {
-  background: var(--blue);
+  background: var(--switch-on);
 }
 
 .toggle-row[aria-checked="true"] .knob {
