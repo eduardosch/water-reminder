@@ -69,7 +69,7 @@ xattr -cr "/Applications/Water Reminder.app"
   **Start with system** and **Play sound**.
 - Closing the window keeps the app running in the **system tray** (menu bar on macOS).
 - The **tray menu** shows the next reminder time and lets you:
-  - Show a reminder now
+  - Show a reminder now (also restarts the countdown)
   - Change the interval
   - Pause alerts (30 min, 1 h, 2 h, until you resume) / Resume alerts
   - Toggle Start with system

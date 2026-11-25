@@ -252,7 +252,9 @@ sequenceDiagram
 ```
 
 A popup can come from three places: the scheduler, **Show reminder now** in the tray, or the
-test button in the settings window.
+**Remind me now** button in the settings window. The two manual ones count as a sip: unless
+alerts are paused they also restart the countdown (`remindNow()` → `reschedule()`). Messages
+the popup writes to its console (e.g. a failed sound playback) are copied to the app log.
 
 ---
 
@@ -289,7 +291,7 @@ tray:
 | `setSettings(patch)`  | `settings:set`   | `updateSettings(patch)`                   |
 | `pause(minutes)`      | `alerts:pause`   | Timed pause, or indefinite when `null`    |
 | `resume()`            | `alerts:resume`  | Resume alerts                             |
-| `testAlert()`         | `alerts:test`    | Show the popup now                        |
+| `testAlert()`         | `alerts:test`    | Show the popup now and restart the countdown |
 | `minimizeWindow()`    | `window:minimize`| Minimize the settings window              |
 | `closeWindow()`       | `window:close`   | Close (hide to tray) the settings window  |
 | `fitWindow(height)`   | `window:fit`     | Resize the window to its content height   |
@@ -331,7 +333,7 @@ The menu is rebuilt from the current state after every change.
 ```mermaid
 flowchart LR
   M["Tray menu"] --> S["Status (read-only)<br/>e.g. Next reminder at 14:30"]
-  M --> N["Show reminder now"]
+  M --> N["Show reminder now<br/>(restarts the countdown)"]
   M --> I["Interval ▸<br/>Every 15 / 30 / 45 / 60 / 90 / 120 min<br/>(+ a custom value if set)"]
   M --> P{"Paused?"}
   P -- "No" --> PA["Pause alerts ▸<br/>For 30 minutes · 1 hour · 2 hours<br/>Until I resume"]

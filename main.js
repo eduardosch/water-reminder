@@ -221,6 +221,15 @@ function pauseAlerts(minutes) {
   reschedule();
 }
 
+function remindNow() {
+  createPopup();
+  // A manual reminder counts as a sip, so restart the countdown (unless paused).
+  if (!isPaused()) {
+    log("countdown reset by manual reminder");
+    reschedule();
+  }
+}
+
 function resumeAlerts() {
   settings.pausedUntil = null;
   saveSettings();
@@ -288,6 +297,10 @@ function createPopup() {
 
   popupWindow.loadFile(path.join(__dirname, "renderer", "index.html"), {
     query: { sound: settings.soundEnabled ? "1" : "0" },
+  });
+  // The popup has no preload; surface its console (e.g. audio playback errors) in the app log.
+  popupWindow.webContents.on("console-message", (event, _level, message) => {
+    log(`popup: ${message || event.message}`);
   });
   popupWindow.once("ready-to-show", () => popupWindow && popupWindow.showInactive());
   popupWindow.on("closed", () => {
@@ -383,7 +396,7 @@ function buildTrayMenu() {
   return Menu.buildFromTemplate([
     { label: statusText(), enabled: false },
     { type: "separator" },
-    { label: "Show reminder now", click: createPopup },
+    { label: "Show reminder now", click: remindNow },
     {
       label: "Interval",
       submenu: intervals.map((m) => ({
@@ -458,7 +471,8 @@ function registerIpc() {
     return getState();
   });
   ipcMain.handle("alerts:test", () => {
-    createPopup();
+    remindNow();
+    return getState();
   });
   ipcMain.handle("window:minimize", () => {
     if (settingsWindow && !settingsWindow.isDestroyed()) settingsWindow.minimize();
