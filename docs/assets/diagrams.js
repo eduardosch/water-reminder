@@ -5,7 +5,9 @@ for (const block of document.querySelectorAll(".language-mermaid")) {
   const diagram = document.createElement("div");
   diagram.className = "mermaid";
   diagram.textContent = block.textContent;
-  block.replaceWith(diagram);
+  // GitHub Pages emits <pre><code class="language-mermaid">; replace the whole <pre> so no
+  // code-block frame is left around the diagram.
+  (block.closest("pre") || block).replaceWith(diagram);
   diagrams.push({ el: diagram, source: block.textContent });
 }
 
