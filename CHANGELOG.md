@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `CLAUDE.md` with project guidelines for Claude Code (overview, tooling, code style,
   main-process patterns, Electron security rules, renderer/UI patterns, commits & releases)
 - `CHANGELOG.md` to track notable changes
+- `.claude/settings.json` enabling the project's Claude Code plugins
 
 ### Changed
 
