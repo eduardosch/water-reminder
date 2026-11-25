@@ -14,6 +14,7 @@ It helps you maintain a healthy hydration routine by sending periodic reminders 
 - [Uninstalling](#uninstalling)
 - [Development](#development)
 - [Building & Releasing](#building--releasing)
+- [Website & Docs](#website--docs)
 - [Project Structure](#project-structure)
 - [Troubleshooting](#troubleshooting)
 - [Contributing](#contributing)
@@ -32,7 +33,7 @@ It's designed for simplicity, minimal system resources, and cross-platform compa
 
 You **don't** need Node.js, npm or Electron — the installers include everything.
 
-Get the latest version from the **[Releases page](https://github.com/eduardosch/water-reminder/releases/latest)**:
+Get the latest version from the **[website](https://eduardosch.github.io/water-reminder/)** or the **[Releases page](https://github.com/eduardosch/water-reminder/releases/latest)**:
 
 | System  | File                                      | How to install                                                                                   |
 | ------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------ |
@@ -138,6 +139,17 @@ Output goes to `dist/`.
 
 ---
 
+## 🌐 Website & Docs
+
+The project website, **https://eduardosch.github.io/water-reminder/**, is served by GitHub Pages from the [`docs/`](docs) folder on `main` (Jekyll, built automatically by GitHub — no local build step).
+
+- [`docs/index.html`](docs/index.html) — landing page; download buttons resolve to the latest release's installers through the GitHub API (falling back to the Releases page)
+- [`docs/workflow.md`](docs/workflow.md) — how the app works: architecture, startup, settings, start with system, scheduler and pause, popup, settings window and IPC, tray, sleep/quit, install/uninstall and the release pipeline, with Mermaid flowcharts (rendered on the site and on GitHub)
+
+To preview locally, open the Markdown file on GitHub, or run `bundle exec jekyll serve --source docs` if you have Jekyll installed.
+
+---
+
 ## 📁 Project Structure
 
 ```
@@ -149,6 +161,11 @@ water-reminder/
 ├── icon.png                 # App / tray icon
 ├── build/
 │   └── installer.nsh        # Windows uninstaller extras (removes startup entry)
+├── docs/                    # GitHub Pages website + application workflow docs
+│   ├── index.html           # Landing / download page
+│   ├── workflow.md          # Application workflow with flowcharts
+│   ├── _layouts/            # Site page layout
+│   └── assets/              # Site CSS, JS, icon, font
 ├── .github/workflows/
 │   └── release.yml          # Builds & publishes installers
 └── renderer/

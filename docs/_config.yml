@@ -1,0 +1,7 @@
+# GitHub Pages (Jekyll) config for the project site, served from /docs on main.
+title: Water Reminder
+description: A lightweight tray app that reminds you to drink water.
+repository: eduardosch/water-reminder
+markdown: kramdown
+kramdown:
+  input: GFM

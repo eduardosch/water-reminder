@@ -1,6 +1,9 @@
 # CLAUDE.md
 
 - before every commit generate the changelog using /add_changelog command
+- always update `docs/workflow.md` (text and Mermaid diagrams) when a change affects app behavior
+  it describes (startup, settings, start with system, scheduler/pause, popup, windows, IPC, tray,
+  install/uninstall, release pipeline)
 - always update `README.md` when a change affects anything it documents (features, settings,
   tray menu, install/build/release steps, scripts, supported platforms, project structure)
 
@@ -15,7 +18,9 @@ no TypeScript.
 - `renderer/` — static HTML/CSS/JS pages (`index.html` + `popup.js` = reminder popup,
   `settings.*` = settings window), assets under `renderer/assets/{fonts,images,sounds}`
 - `build/installer.nsh` — extra NSIS uninstall steps
-- `.github/workflows/release.yml` — builds installers on `v*` tags into a draft GitHub Release
+- `.github/workflows/release.yml` — builds installers on `v*` tags and publishes the GitHub Release
+- `docs/` — GitHub Pages site (Jekyll, served from `/docs` on `main`): `index.html` download page,
+  `workflow.md` application workflow with Mermaid diagrams. Not shipped in the installer.
 
 ## Tooling
 

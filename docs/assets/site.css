@@ -1,0 +1,297 @@
+@font-face {
+  font-family: "Bungee-Regular";
+  src: url("Bungee-Regular.ttf") format("truetype");
+  font-display: swap;
+}
+
+:root {
+  --blue: #0077ff;
+  --blue-soft: #e6f1ff;
+  --bg: #f5f9ff;
+  --card: #ffffff;
+  --text: #1d2b3a;
+  --muted: #6b7a8c;
+  --border: #d9e4f2;
+  --on-blue: #ffffff;
+  --code-bg: #eef3fa;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --blue: #4d9fff;
+    --blue-soft: #16263b;
+    --bg: #0f1723;
+    --card: #172131;
+    --text: #e4ecf6;
+    --muted: #8fa1b6;
+    --border: #26354a;
+    --on-blue: #0f1723;
+    --code-bg: #1c2839;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, sans-serif;
+}
+
+a {
+  color: var(--blue);
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Bungee-Regular", system-ui, sans-serif;
+  font-weight: normal;
+  line-height: 1.2;
+  color: var(--blue);
+}
+
+img {
+  max-width: 100%;
+}
+
+/* Header & footer */
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.brand {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-family: "Bungee-Regular", system-ui, sans-serif;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.site-header nav {
+  display: flex;
+  gap: 20px;
+}
+
+.site-header nav a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.site-header nav a:hover {
+  color: var(--blue);
+}
+
+.site-footer {
+  max-width: 1040px;
+  margin: 48px auto 0;
+  padding: 24px 16px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 14px;
+}
+
+main {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 14px;
+}
+
+/* Home */
+
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 48px;
+  align-items: center;
+  padding: 32px 0 16px;
+}
+
+.hero h1 {
+  margin: 0 0 12px;
+  font-size: clamp(28px, 5vw, 44px);
+}
+
+.hero > div {
+  flex: 1 1 320px;
+}
+
+.lead {
+  max-width: 560px;
+  font-size: 18px;
+}
+
+.version {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.card.current {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-soft);
+}
+
+.card h3 {
+  margin: 0;
+}
+
+.card p {
+  margin: 0;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 16px;
+  border: 1px solid var(--blue);
+  border-radius: 10px;
+  background: var(--blue);
+  color: var(--on-blue);
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+}
+
+.button:hover {
+  filter: brightness(1.08);
+}
+
+.button.secondary {
+  background: transparent;
+  color: var(--blue);
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  padding: 0;
+  list-style: none;
+}
+
+.feature-grid li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.feature-grid span {
+  color: var(--muted);
+}
+
+/* Docs (Markdown pages) */
+
+.doc {
+  max-width: 860px;
+}
+
+.doc h1 {
+  font-size: clamp(26px, 4vw, 36px);
+}
+
+.doc h2 {
+  margin-top: 40px;
+  font-size: 24px;
+}
+
+.doc hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 32px 0;
+}
+
+.doc table {
+  display: block;
+  overflow-x: auto;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.doc th,
+.doc td {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.doc th {
+  background: var(--card);
+}
+
+.doc code {
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: var(--code-bg);
+  font-size: 0.9em;
+}
+
+.doc pre {
+  overflow-x: auto;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--code-bg);
+}
+
+.doc pre code {
+  padding: 0;
+}
+
+.mermaid {
+  overflow-x: auto;
+  margin: 20px 0;
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  text-align: center;
+}

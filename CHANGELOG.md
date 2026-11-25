@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Project website on GitHub Pages (`docs/`), with a download page that links to the latest
+  release's installers and highlights the visitor's OS
+- `docs/workflow.md` documenting the application workflow with Mermaid flowcharts, state and
+  sequence diagrams
+- `CLAUDE.md` rule to keep `docs/workflow.md` in sync with app behavior
+
 ## [1.0.0] - 2026-11-25
 
 ### Added
