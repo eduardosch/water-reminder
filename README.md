@@ -63,7 +63,10 @@ xattr -cr "/Applications/Water Reminder.app"
 
 ## 🚀 Usage
 
-- On first launch the **settings window** opens. Pick an interval, toggle **Start with system** and **Play sound**.
+- On first launch the **settings window** opens. A ring counts down to the next reminder; use
+  **Remind me now**, **Pause** (30 min, 1 h, 2 h, until you resume) or **Resume reminders**.
+  Pick an interval with the presets or the −/+ stepper (5-minute steps) and toggle
+  **Start with system** and **Play sound**.
 - Closing the window keeps the app running in the **system tray** (menu bar on macOS).
 - The **tray menu** shows the next reminder time and lets you:
   - Show a reminder now

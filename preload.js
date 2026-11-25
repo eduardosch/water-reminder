@@ -6,6 +6,9 @@ contextBridge.exposeInMainWorld("api", {
   pause: (minutes) => ipcRenderer.invoke("alerts:pause", minutes),
   resume: () => ipcRenderer.invoke("alerts:resume"),
   testAlert: () => ipcRenderer.invoke("alerts:test"),
+  minimizeWindow: () => ipcRenderer.invoke("window:minimize"),
+  closeWindow: () => ipcRenderer.invoke("window:close"),
+  fitWindow: (height) => ipcRenderer.invoke("window:fit", height),
   onStateChanged: (callback) => {
     const listener = (_event, state) => callback(state);
     ipcRenderer.on("state:changed", listener);

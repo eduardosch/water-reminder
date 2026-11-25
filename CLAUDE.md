@@ -90,10 +90,11 @@ no TypeScript.
   wire it to both `window.api.getState()` and `window.api.onStateChanged()`.
 - Don't overwrite an input the user is currently editing (`document.activeElement` check).
 - Toggle visibility with the `hidden` attribute and classes with `classList.toggle`.
-- CSS: use the custom properties in `settings.css` `:root` (`--blue`, `--bg`, `--card`, `--text`,
-  `--muted`, `--border`, `--paused`) and provide dark-mode values in the
+- CSS: use the custom properties in `settings.css` `:root` (`--blue`, `--blue-soft`, `--bg`, `--card`,
+  `--text`, `--muted`, `--border`, `--paused`, …) and provide dark-mode values in the
   `@media (prefers-color-scheme: dark)` block for any new color. No hardcoded colors elsewhere.
-- Brand font is `Bungee-Regular` (headings/popup message); body text uses the system font stack.
+- Fonts are bundled under `renderer/assets/fonts` (CSP blocks remote fonts): `Bungee-Regular` for the
+  popup message, `Figtree` for settings-window text, `Bricolage Grotesque` for the countdown number.
 - UI text is English, short, sentence case; use `…` (ellipsis character) for menu items that open windows.
 - Popup windows must not steal focus (`focusable: false`, `showInactive()`).
 

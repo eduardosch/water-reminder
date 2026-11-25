@@ -22,6 +22,12 @@ const PAUSE_PRESETS = [
 ];
 const MIN_INTERVAL = 1;
 const MAX_INTERVAL = 480;
+const INTERVAL_STEP_MINUTES = 5; // settings window −/+ stepper
+const SETTINGS_WIDTH = 400;
+// Initial guess; the renderer reports its real content height via window:fit.
+const SETTINGS_INITIAL_HEIGHT = 700;
+const SETTINGS_MIN_HEIGHT = 300;
+const SETTINGS_MAX_HEIGHT = 1000;
 const POPUP_DURATION_MS = 6000;
 
 const isWin = process.platform === "win32";
@@ -244,6 +250,7 @@ function getState() {
     pausePresets: PAUSE_PRESETS,
     minInterval: MIN_INTERVAL,
     maxInterval: MAX_INTERVAL,
+    intervalStepMinutes: INTERVAL_STEP_MINUTES,
   };
 }
 
@@ -302,9 +309,11 @@ function showSettings() {
   }
 
   settingsWindow = new BrowserWindow({
-    width: 420,
-    height: 690,
+    width: SETTINGS_WIDTH,
+    height: SETTINGS_INITIAL_HEIGHT,
     useContentSize: true,
+    // The renderer draws its own title bar (drag region, minimize, close to tray).
+    frame: false,
     resizable: false,
     maximizable: false,
     fullscreenable: false,
@@ -335,6 +344,12 @@ function showSettings() {
   settingsWindow.on("closed", () => {
     settingsWindow = null;
   });
+}
+
+function fitSettingsWindow(height) {
+  if (!settingsWindow || settingsWindow.isDestroyed() || !Number.isFinite(height)) return;
+  const h = Math.min(SETTINGS_MAX_HEIGHT, Math.max(SETTINGS_MIN_HEIGHT, Math.ceil(height)));
+  settingsWindow.setContentSize(SETTINGS_WIDTH, h);
 }
 
 // ---------------------------------------------------------------------------
@@ -445,6 +460,14 @@ function registerIpc() {
   ipcMain.handle("alerts:test", () => {
     createPopup();
   });
+  ipcMain.handle("window:minimize", () => {
+    if (settingsWindow && !settingsWindow.isDestroyed()) settingsWindow.minimize();
+  });
+  ipcMain.handle("window:close", () => {
+    // Goes through the "close" handler, which hides the window to the tray.
+    if (settingsWindow && !settingsWindow.isDestroyed()) settingsWindow.close();
+  });
+  ipcMain.handle("window:fit", (_e, height) => fitSettingsWindow(Number(height)));
 }
 
 // ---------------------------------------------------------------------------

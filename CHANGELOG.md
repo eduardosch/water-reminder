@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-11-25
+
 ### Added
 
 - Project website on GitHub Pages (`docs/`), with a download page that links to the latest
@@ -14,6 +16,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `docs/workflow.md` documenting the application workflow with Mermaid flowcharts, state and
   sequence diagrams
 - `CLAUDE.md` rule to keep `docs/workflow.md` in sync with app behavior
+
+### Changed
+
+- Redesigned settings window: frameless window with its own title bar (minimize, close to
+  tray), countdown ring to the next reminder, "Remind me now" / "Pause" / "Resume reminders"
+  buttons, interval stepper (5-minute steps) with segmented presets, and switch toggles with
+  hints; the window sizes itself to its content
+- Bundled the Figtree and Bricolage Grotesque fonts (SIL OFL) for the settings window
 
 ## [1.0.0] - 2026-11-25
 

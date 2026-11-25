@@ -262,6 +262,11 @@ There is only ever one settings window. Opening it again shows and focuses the e
 Closing it **hides** it; the app keeps running in the tray. It's only really destroyed when
 you quit.
 
+The window has no OS frame: the page draws its own title bar (drag region, **Minimize** and
+**Close to tray** buttons) and asks the main process to resize the window to its content
+(`window:fit`), so it grows when the pause menu opens. The countdown ring is updated every
+second in the renderer from `nextAlertAt`, without extra IPC.
+
 ```mermaid
 flowchart TD
   A["showSettings()<br/>tray · second launch · macOS Dock activate"] --> B{"Window exists?"}
@@ -285,6 +290,9 @@ tray:
 | `pause(minutes)`      | `alerts:pause`   | Timed pause, or indefinite when `null`    |
 | `resume()`            | `alerts:resume`  | Resume alerts                             |
 | `testAlert()`         | `alerts:test`    | Show the popup now                        |
+| `minimizeWindow()`    | `window:minimize`| Minimize the settings window              |
+| `closeWindow()`       | `window:close`   | Close (hide to tray) the settings window  |
+| `fitWindow(height)`   | `window:fit`     | Resize the window to its content height   |
 | `onStateChanged(cb)`  | `state:changed`  | Push from main; returns an unsubscribe function |
 
 Example: changing the interval in the settings window.
@@ -298,7 +306,7 @@ sequenceDiagram
   participant F as settings.json
   participant T as Tray
 
-  U->>S: type 45 and press Enter
+  U->>S: click the "45m" preset
   S->>B: api.setSettings({ intervalMinutes: 45 })
   B->>M: invoke "settings:set"
   M->>M: clamp to 1–480, update settings

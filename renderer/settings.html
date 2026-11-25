@@ -9,41 +9,98 @@
 </head>
 
 <body>
-    <header>
-        <h1>💧 Water Reminder</h1>
-        <p id="status" class="status">Loading…</p>
-    </header>
+    <div id="app" class="app">
+        <header class="titlebar">
+            <div class="titlebar-title">
+                <svg class="drop" width="14" height="16" viewBox="0 0 14 16" aria-hidden="true">
+                    <path d="M7 0.8C7 0.8 1 7.4 1 10.6a6 6 0 0 0 12 0C13 7.4 7 0.8 7 0.8Z" />
+                </svg>
+                <span>Water Reminder</span>
+            </div>
+            <div class="titlebar-controls">
+                <button id="minimize" class="window-btn" title="Minimize" aria-label="Minimize">
+                    <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                        <path d="M2 6h8" />
+                    </svg>
+                </button>
+                <button id="close" class="window-btn" title="Close to tray" aria-label="Close to tray">
+                    <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                        <path d="M3 3l6 6M9 3l-6 6" />
+                    </svg>
+                </button>
+            </div>
+        </header>
 
-    <section class="card">
-        <h2>Remind me every</h2>
-        <div class="interval-row">
-            <input id="interval" type="number" min="1" max="480" step="1" />
-            <span>minutes</span>
-        </div>
-        <div id="presets" class="chips"></div>
-    </section>
+        <main class="content">
+            <section class="card ring-card">
+                <div class="ring">
+                    <svg width="200" height="200" viewBox="0 0 200 200" aria-hidden="true">
+                        <circle class="ring-track" cx="100" cy="100" r="88" />
+                        <circle id="ring-progress" class="ring-progress" cx="100" cy="100" r="88" />
+                    </svg>
+                    <div class="ring-text" role="status">
+                        <span id="ring-label" class="ring-label">Next sip in</span>
+                        <span id="ring-value" class="ring-value">–</span>
+                        <span id="ring-sub" class="ring-sub"></span>
+                    </div>
+                </div>
 
-    <section class="card">
-        <h2>Alerts</h2>
-        <div id="pause-controls" class="chips"></div>
-        <button id="resume" class="primary" hidden>Resume alerts</button>
-        <button id="test" class="secondary">Show a test reminder</button>
-    </section>
+                <div id="active-actions" class="actions">
+                    <button id="test" class="btn btn-primary">
+                        <svg width="14" height="16" viewBox="0 0 14 16" aria-hidden="true">
+                            <path d="M7 0.8C7 0.8 1 7.4 1 10.6a6 6 0 0 0 12 0C13 7.4 7 0.8 7 0.8Z" />
+                        </svg>
+                        Remind me now
+                    </button>
+                    <button id="pause" class="btn btn-soft" aria-expanded="false" aria-controls="pause-menu">
+                        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                            <rect x="2" y="1.5" width="2.6" height="9" rx="1" />
+                            <rect x="7.4" y="1.5" width="2.6" height="9" rx="1" />
+                        </svg>
+                        Pause
+                    </button>
+                </div>
+                <button id="resume" class="btn btn-primary btn-wide" hidden>
+                    <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                        <path d="M3 1.8v8.4L10 6z" />
+                    </svg>
+                    Resume reminders
+                </button>
+                <div id="pause-menu" class="pause-menu" hidden></div>
+            </section>
 
-    <section class="card">
-        <h2>Options</h2>
-        <label class="toggle">
-            <input id="autostart" type="checkbox" />
-            <span>Start with system</span>
-        </label>
-        <p id="autostart-note" class="note" hidden>Available in the installed app (not in development mode).</p>
-        <label class="toggle">
-            <input id="sound" type="checkbox" />
-            <span>Play sound</span>
-        </label>
-    </section>
+            <section class="card interval-card">
+                <div class="interval-row">
+                    <span class="card-title">Remind me every</span>
+                    <div class="stepper">
+                        <button id="dec" class="stepper-btn">−</button>
+                        <span id="interval" class="stepper-value"></span>
+                        <button id="inc" class="stepper-btn">+</button>
+                    </div>
+                </div>
+                <div id="presets" class="segmented"></div>
+            </section>
 
-    <p class="note footer">Closing this window keeps the app running in the system tray.</p>
+            <section class="card toggles-card">
+                <button id="autostart" class="toggle-row" role="switch" aria-checked="false">
+                    <span class="toggle-text">
+                        <span class="toggle-label">Start with system</span>
+                        <span id="autostart-hint" class="toggle-hint">Launch quietly when you sign in</span>
+                    </span>
+                    <span class="switch" aria-hidden="true"><span class="knob"></span></span>
+                </button>
+                <button id="sound" class="toggle-row" role="switch" aria-checked="false">
+                    <span class="toggle-text">
+                        <span class="toggle-label">Play sound</span>
+                        <span class="toggle-hint">A soft chime with each reminder</span>
+                    </span>
+                    <span class="switch" aria-hidden="true"><span class="knob"></span></span>
+                </button>
+            </section>
+
+            <p class="footer">Closing this window keeps Water Reminder running in the tray.</p>
+        </main>
+    </div>
 
     <script src="settings.js"></script>
 </body>
