@@ -53,7 +53,7 @@ function log(message) {
 // ---------------------------------------------------------------------------
 
 const DEFAULT_SETTINGS = {
-  intervalMinutes: 30,
+  intervalMinutes: 15,
   autoStart: true,
   soundEnabled: true,
   // null = active, number = paused until timestamp (ms), "indefinite" = paused until resumed

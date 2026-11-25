@@ -126,7 +126,7 @@ Settings live in a plain JSON file in the app's user-data folder:
 
 | Key               | Default | Meaning                                                                         |
 | ----------------- | ------- | ------------------------------------------------------------------------------- |
-| `intervalMinutes` | `30`    | Minutes between reminders, always clamped to 1–480                              |
+| `intervalMinutes` | `15`    | Minutes between reminders, always clamped to 1–480                              |
 | `autoStart`       | `true`  | Start with system                                                               |
 | `soundEnabled`    | `true`  | Play a sound with the popup                                                     |
 | `pausedUntil`     | `null`  | `null` = active, a timestamp in ms = paused until then, `"indefinite"` = paused until resumed |

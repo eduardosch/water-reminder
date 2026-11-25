@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-11-25
+
+### Changed
+
+- Default reminder interval is now 15 minutes (was 30); existing saved settings are kept
+
 ## [1.1.0] - 2026-11-25
 
 ### Added
