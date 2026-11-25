@@ -244,7 +244,11 @@ sequenceDiagram
     M->>P: load index.html?sound=1 or 0
     P-->>M: ready-to-show
     M->>P: showInactive() (no focus steal)
-    P->>P: play animation, play sound if sound=1
+    P->>P: play animation
+    opt sound=1
+      P->>P: open audio output with silence (wakes Bluetooth headphones)
+      P->>P: play chime after 1.5 s
+    end
     Note over M,P: after 6 seconds
     M->>P: close()
     P-->>M: closed (reference cleared)
