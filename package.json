@@ -1,36 +1,94 @@
 {
   "name": "water-reminder",
+  "productName": "Water Reminder",
   "version": "1.0.0",
+  "description": "A lightweight tray app that reminds you to drink water.",
   "main": "main.js",
   "license": "MIT",
+  "author": "Eduardo Schröder",
+  "homepage": "https://github.com/eduardosch/water-reminder",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eduardosch/water-reminder.git"
+  },
+  "packageManager": "pnpm@12.18.0",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win",
+    "dist:linux": "electron-builder --linux",
+    "dist:mac": "electron-builder --mac"
   },
   "build": {
-    "appId": "water-reminder.com",
-    "productName": "WaterReminder",
+    "appId": "com.eduardoschroder.waterreminder",
+    "productName": "Water Reminder",
+    "copyright": "Copyright © Eduardo Schröder",
+    "icon": "icon.png",
     "directories": {
-      "output": "dist"
+      "output": "dist",
+      "buildResources": "build"
     },
     "files": [
-      "**/*"
+      "main.js",
+      "preload.js",
+      "icon.png",
+      "renderer/**/*",
+      "package.json"
     ],
+    "publish": {
+      "provider": "github",
+      "owner": "eduardosch",
+      "repo": "water-reminder",
+      "releaseType": "draft"
+    },
     "win": {
-      "target": [
-        "nsis",
-        "portable"
-      ]
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Water Reminder",
+      "uninstallDisplayName": "Water Reminder",
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": true,
+      "include": "build/installer.nsh",
+      "artifactName": "WaterReminder-Setup-${version}.${ext}"
     },
     "mac": {
-      "target": "dmg"
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "universal"
+          ]
+        }
+      ],
+      "category": "public.app-category.healthcare-fitness",
+      "identity": null,
+      "extendInfo": {
+        "LSUIElement": true
+      }
+    },
+    "dmg": {
+      "artifactName": "WaterReminder-${version}-mac-universal.${ext}"
     },
     "linux": {
-      "target": "AppImage"
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Utility",
+      "synopsis": "Reminds you to drink water",
+      "maintainer": "Eduardo Schröder <eduardosch@users.noreply.github.com>",
+      "executableName": "water-reminder",
+      "artifactName": "WaterReminder-${version}-${arch}.${ext}"
     }
   },
   "devDependencies": {
     "electron": "^25.0.0",
-    "electron-builder": "^24.0.0"
+    "electron-builder": "^26.18.0"
   }
 }

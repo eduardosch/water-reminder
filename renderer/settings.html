@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'" />
+    <title>Water Reminder</title>
+    <link rel="stylesheet" href="settings.css" />
+</head>
+
+<body>
+    <header>
+        <h1>💧 Water Reminder</h1>
+        <p id="status" class="status">Loading…</p>
+    </header>
+
+    <section class="card">
+        <h2>Remind me every</h2>
+        <div class="interval-row">
+            <input id="interval" type="number" min="1" max="480" step="1" />
+            <span>minutes</span>
+        </div>
+        <div id="presets" class="chips"></div>
+    </section>
+
+    <section class="card">
+        <h2>Alerts</h2>
+        <div id="pause-controls" class="chips"></div>
+        <button id="resume" class="primary" hidden>Resume alerts</button>
+        <button id="test" class="secondary">Show a test reminder</button>
+    </section>
+
+    <section class="card">
+        <h2>Options</h2>
+        <label class="toggle">
+            <input id="autostart" type="checkbox" />
+            <span>Start with system</span>
+        </label>
+        <p id="autostart-note" class="note" hidden>Available in the installed app (not in development mode).</p>
+        <label class="toggle">
+            <input id="sound" type="checkbox" />
+            <span>Play sound</span>
+        </label>
+    </section>
+
+    <p class="note footer">Closing this window keeps the app running in the system tray.</p>
+
+    <script src="settings.js"></script>
+</body>
+
+</html>

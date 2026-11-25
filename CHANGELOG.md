@@ -9,6 +9,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Settings window to choose the reminder interval (1–480 min, with presets), toggle
+  "Start with system" and "Play sound", pause/resume alerts and show a test reminder
+- Tray menu with next-reminder status, interval presets, pause (30 min / 1 h / 2 h / until
+  resumed), start with system, settings and quit; closing the window keeps the app in the tray
+- Start with system on Windows, macOS and Linux (starts hidden in the tray); disabling removes
+  the startup entry, and changes made in the OS are respected
+- Settings and pause state persisted to `settings.json`; timer restarts after wake from sleep
+- Single-instance lock (launching again opens the settings window)
+- Popup notification sound
+- Windows installer (NSIS) listed in Add or remove programs; uninstall also removes the
+  startup entry and app data
+- Linux `.deb` and AppImage, macOS universal `.dmg`
+- GitHub Actions workflow that builds all installers on `v*` tags into a draft GitHub Release
 - `CLAUDE.md` with project guidelines for Claude Code (overview, tooling, code style,
   main-process patterns, Electron security rules, renderer/UI patterns, commits & releases)
 - `CHANGELOG.md` to track notable changes
+
+### Changed
+
+- Upgraded electron-builder to 26 (the NSIS installer built with 24 crashed on recent Windows 11)
+- Windows build produces only the NSIS installer (portable build removed)
+- Product name is now "Water Reminder"; app id `com.eduardoschroder.waterreminder`
+- Renderer windows use `contextIsolation` with a preload bridge and a strict CSP
+- README rewritten with download, usage, uninstall and release instructions
+
+### Fixed
+
+- Missing `preload.js` referenced by the popup window
