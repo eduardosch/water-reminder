@@ -1,0 +1,73 @@
+.ww{width:400px;background:#F4F8FB;border-radius:12px;overflow:hidden;position:relative;display:flex;flex-direction:column;
+  box-shadow:0 0 0 1px rgba(15,34,51,.08),0 24px 60px -12px rgba(15,34,51,.28);font-family:'Figtree',system-ui,sans-serif;color:#0F2233;text-align:left;-webkit-font-smoothing:antialiased}
+.ww button{font-family:inherit;cursor:pointer;border:0}
+.ww [hidden]{display:none!important}
+.ww-bar{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 6px 0 16px}
+.ww-title{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;letter-spacing:.01em}
+.ww-ctrls{display:flex;gap:2px}
+.ww-ic{width:32px;height:32px;background:transparent;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#5B6B7A}
+.ww-ic:hover{background:#E6EDF3}
+.ww-body{padding:8px 16px 16px;display:flex;flex-direction:column;gap:12px}
+.ww-card{background:#fff;border-radius:20px;box-shadow:0 0 0 1px #E3EAF0}
+.ww-hero{padding:24px 20px 20px;display:flex;flex-direction:column;align-items:center;gap:18px}
+.ww-ring{position:relative;width:200px;height:200px}
+.ww-ring svg{transform:rotate(-90deg)}
+.ww-prog{transition:stroke-dashoffset 1s linear,stroke .3s}
+.ww-ring-in{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.ww-lbl{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#5B6B7A}
+.ww-val{font-family:'Bricolage Grotesque',sans-serif;font-size:48px;font-weight:600;letter-spacing:-.02em;line-height:1.05;font-variant-numeric:tabular-nums}
+.ww-sub{font-size:13px;color:#5B6B7A}
+.ww-actions{display:flex;gap:8px;width:100%}
+.ww-btn{flex:1;height:44px;border-radius:12px;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px}
+.ww-pri{background:#1A7FD6;color:#fff}.ww-pri:hover{background:#1570C0}
+.ww-sec{background:#E8F1FA;color:#0F4C85}.ww-sec:hover{background:#DCEAF7}
+.ww-pausegrid{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:-6px}
+.ww-pausegrid button{height:40px;border-radius:10px;background:#F4F8FB;box-shadow:inset 0 0 0 1px #E3EAF0;color:#0F2233;font-size:13px;font-weight:500}
+.ww-pausegrid button:hover{background:#EAF1F7}
+.ww-int{padding:18px 20px 20px;display:flex;flex-direction:column;gap:14px}
+.ww-row{display:flex;align-items:center;justify-content:space-between}
+.ww-strong{font-size:14px;font-weight:600;color:#0F2233}
+.ww-step{display:flex;align-items:center;gap:4px;background:#F4F8FB;border-radius:10px;padding:3px;box-shadow:inset 0 0 0 1px #E3EAF0}
+.ww-step button{width:30px;height:30px;border-radius:8px;background:transparent;color:#0F2233;font-size:16px}
+.ww-step button:hover{background:#fff}
+.ww-intv{min-width:62px;text-align:center;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums}
+.ww-seg{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;background:#F4F8FB;border-radius:12px;padding:4px;box-shadow:inset 0 0 0 1px #E3EAF0}
+.ww-seg button{height:32px;border-radius:9px;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;background:transparent;color:#5B6B7A}
+.ww-seg button.on{background:#fff;color:#1A7FD6;box-shadow:0 1px 2px rgba(15,34,51,.12),0 0 0 1px #E3EAF0}
+.ww-tgls{padding:6px 20px}
+.ww-tg{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0;background:transparent}
+.ww-tg+.ww-tg{border-top:1px solid #EEF2F6}
+.ww-tgtxt{display:flex;flex-direction:column;gap:2px;text-align:left}
+.ww-hint{font-size:12.5px;color:#5B6B7A}
+.ww-track{width:40px;height:24px;border-radius:12px;background:#D3DCE4;position:relative;flex-shrink:0;transition:background .2s}
+.ww-track.on{background:#1A7FD6}
+.ww-knob{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:9px;background:#fff;box-shadow:0 1px 3px rgba(15,34,51,.25);transition:left .2s}
+.ww-track.on .ww-knob{left:19px}
+.ww-foot{margin:2px 0 0;text-align:center;font-size:12px;color:#6B7A88}
+.ww-toast{position:absolute;left:16px;right:16px;bottom:16px;background:#0F2233;color:#fff;border-radius:12px;padding:12px 14px;font-size:13px;display:flex;align-items:center;gap:10px;box-shadow:0 12px 30px -8px rgba(15,34,51,.5)}
+
+/* dark theme — matches the "Water Reminder Dark" design */
+[data-theme=dark] .ww{background:#0F1A24;color:#E6EEF5;box-shadow:0 0 0 1px rgba(255,255,255,.06),0 24px 60px -12px rgba(0,0,0,.65)}
+[data-theme=dark] .ww-ic{color:#8DA1B3}
+[data-theme=dark] .ww-ic:hover{background:#1A2836}
+[data-theme=dark] .ww-card{background:#17242F;box-shadow:0 0 0 1px #223241}
+[data-theme=dark] .ww-ring circle:first-child{stroke:#1E2D3A}
+[data-theme=dark] .ww-lbl,[data-theme=dark] .ww-sub,[data-theme=dark] .ww-hint{color:#8DA1B3}
+[data-theme=dark] .ww-pri{background:#1670C0}
+[data-theme=dark] .ww-pri:hover{background:#1462AB}
+[data-theme=dark] .ww-sec{background:#17324B;color:#CFE6FA}
+[data-theme=dark] .ww-sec:hover{background:#1C3D5B}
+[data-theme=dark] .ww-pausegrid button{background:#0F1A24;box-shadow:inset 0 0 0 1px #223241;color:#E6EEF5}
+[data-theme=dark] .ww-pausegrid button:hover{background:#1E2D3A}
+[data-theme=dark] .ww-strong{color:#E6EEF5}
+[data-theme=dark] .ww-step,[data-theme=dark] .ww-seg{background:#0F1A24;box-shadow:inset 0 0 0 1px #223241}
+[data-theme=dark] .ww-step button{color:#E6EEF5}
+[data-theme=dark] .ww-step button:hover{background:#17242F}
+[data-theme=dark] .ww-seg button{color:#8DA1B3}
+[data-theme=dark] .ww-seg button.on{background:#243546;color:#7CC0F7;box-shadow:0 1px 2px rgba(0,0,0,.35),0 0 0 1px #2E4152}
+[data-theme=dark] .ww-tg+.ww-tg{border-top-color:#1E2D3A}
+[data-theme=dark] .ww-track{background:#2A3A49}
+[data-theme=dark] .ww-track.on{background:#1A7FD6}
+[data-theme=dark] .ww-knob{box-shadow:0 1px 3px rgba(0,0,0,.45)}
+[data-theme=dark] .ww-foot{color:#7D90A1}
+[data-theme=dark] .ww-toast{background:#EAF2F9;color:#0F2233}

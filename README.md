@@ -147,7 +147,7 @@ Output goes to `dist/`.
 
 The project website, **https://eduardosch.github.io/water-reminder/**, is served by GitHub Pages from the [`docs/`](docs) folder on `main` (Jekyll, built automatically by GitHub — no local build step).
 
-- [`docs/index.html`](docs/index.html) — landing page; download buttons resolve to the latest release's installers through the GitHub API (falling back to the Releases page)
+- [`docs/index.html`](docs/index.html) — landing page with a live, clickable demo of the settings window ("Remind me now" shows the reminder popup), features, a short how-it-works and per-platform download buttons; the buttons resolve to the latest release's installers through the GitHub API (falling back to the Releases page) and the visitor's OS is marked as recommended. The site follows the system light/dark setting, with a sun/moon toggle in the top bar that remembers the choice
 - [`docs/workflow.md`](docs/workflow.md) — how the app works: architecture, startup, settings, start with system, scheduler and pause, popup, settings window and IPC, tray, sleep/quit, install/uninstall and the release pipeline, with Mermaid flowcharts (rendered on the site and on GitHub)
 
 To preview locally, open the Markdown file on GitHub, or run `bundle exec jekyll serve --source docs` if you have Jekyll installed.
@@ -170,7 +170,7 @@ water-reminder/
 │   ├── index.html           # Landing / download page
 │   ├── workflow.md          # Application workflow with flowcharts
 │   ├── _layouts/            # Site page layout
-│   └── assets/              # Site CSS, JS, icon, font
+│   └── assets/              # Site CSS/JS, live demo window, fonts, popup image, icon
 ├── .github/workflows/
 │   └── release.yml          # Builds & publishes installers
 └── renderer/

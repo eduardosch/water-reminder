@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Redesigned project website: live, clickable demo of the settings window in the hero (with the
+  reminder popup), features, a three-step how-it-works and per-platform download buttons that
+  link straight to the latest installers; light and dark themes that follow the system setting,
+  with a toggle that remembers the choice. The application workflow page uses the new layout,
+  and its diagrams follow the theme
+
 ## [1.2.0] - 2026-11-25
 
 ### Added
