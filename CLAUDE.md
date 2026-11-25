@@ -96,4 +96,15 @@ no TypeScript.
 
 - Follow the git-commit-style skill (conventional commit type + emoji).
 - Generate the changelog with /add_changelog before every commit (see top rule).
-- Releases: bump `version` in package.json, then push a matching `vX.Y.Z` tag.
+- Releases: bump `version` in package.json, then push a matching `vX.Y.Z` tag. The release
+  workflow builds all installers and publishes the GitHub Release automatically.
+- **Always ship a new installer when necessary:** whenever a commit changes what ends up in the
+  installed app (runtime files in `build.files`, `build/installer.nsh`, electron-builder config,
+  or runtime/Electron dependency versions), cut a new release in the same task:
+  1. Bump `version` (semver: fix → patch, new feature → minor, breaking → major).
+  2. Move the `[Unreleased]` changelog entries under `## [X.Y.Z] - YYYY-MM-DD`.
+  3. Commit, push `main`, then `git tag vX.Y.Z && git push origin vX.Y.Z`.
+  4. Watch the run (`gh run watch`) and confirm the release has the `.exe`, `.deb`, `.AppImage`
+     and `.dmg` assets (`gh release view vX.Y.Z`).
+  Changes that only touch docs, CI, `CLAUDE.md` or dev tooling don't need a release.
+  Never re-use or move an existing tag — always bump the version.

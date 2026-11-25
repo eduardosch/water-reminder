@@ -7,7 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-11-25
+
 ### Added
+
+- Installers published as a GitHub Release: the workflow now publishes the release
+  automatically once all platform builds pass
+- `CLAUDE.md` rule to cut a new release (version bump + tag) whenever a change affects the
+  installed app
 
 - Settings window to choose the reminder interval (1–480 min, with presets), toggle
   "Start with system" and "Play sound", pause/resume alerts and show a test reminder

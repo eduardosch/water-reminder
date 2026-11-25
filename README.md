@@ -120,7 +120,7 @@ The GitHub Actions workflow [`.github/workflows/release.yml`](.github/workflows/
    git tag v1.0.0
    git push origin v1.0.0
    ```
-3. When the workflow finishes, open **Releases** on GitHub, review the **draft** release and click **Publish**.
+3. The workflow uploads the installers to a draft release and publishes it automatically once all three platforms build successfully. If a build fails, the release stays a draft.
 
 You can also run the workflow manually from the **Actions** tab; it then only uploads the installers as workflow artifacts.
 

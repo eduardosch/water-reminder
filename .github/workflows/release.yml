@@ -1,7 +1,7 @@
 name: Build & Release
 
-# Builds the Windows, Linux and macOS installers and uploads them to a draft
-# GitHub Release. Trigger by pushing a version tag:
+# Builds the Windows, Linux and macOS installers, uploads them to a draft GitHub
+# Release and publishes it once all builds pass. Trigger by pushing a version tag:
 #   git tag v1.0.0 && git push origin v1.0.0
 # The tag must match "version" in package.json.
 
@@ -56,3 +56,15 @@ jobs:
             dist/*.deb
             dist/*.dmg
           if-no-files-found: ignore
+
+  # Publishes the draft release only after every platform built successfully, so the
+  # "latest release" download links never point at a release with missing installers.
+  publish:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish release
+        run: gh release edit "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --draft=false --latest
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
